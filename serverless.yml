@@ -1,0 +1,16 @@
+service: mcbackend
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+
+functions:
+  api:
+    handler: index.apiHandler
+    events:
+      - httpApi: '*'
+  closingPrice:
+    handler: index.syncClosingPricesHandler
+    events:
+      - schedule: cron(30 21 * * ? *)
