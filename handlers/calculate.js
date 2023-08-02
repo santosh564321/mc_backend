@@ -1,4 +1,4 @@
-const { calculateLRR, calculateVOR, calculateMC, calculateRollingAvgTable, calculateSnSpend, calculate2QTotal, calculateStats, roundOff2DArray, calculateSharesPurchased } = require("../utils/mc")
+const { calculateLRR, calculateVOR, calculateMC, calculateRollingAvgTable, calculateSnSpend, calculate2QTotal, calculateStats, roundOff2DArray, calculateSharesPurchased, calculateMean } = require("../utils/mc")
 const { getClosingPrices, getClosingPricesArr } = require("../utils/stocks")
 
 const MC_ROWS = 200
@@ -15,6 +15,11 @@ const runCalculation = (symbol, reqBody) => {
             console.log("==========LRR========\n", lrr)
             let vor = calculateVOR(lrr)
             console.log("==========VOR========\n", vor)
+            let dailyVariance = calculateMean(lrr)
+            let annulazedVariance = dailyVariance * 252
+            let annulazedSD = Math.sqrt(annulazedVariance)
+            let startDate = closingPrices[closingPrices.length - 1].date
+            let endDate = closingPrices[0].date
 
             let mcTable = []
             for (let i = 0; i < MC_ROWS; i++) {
@@ -52,7 +57,12 @@ const runCalculation = (symbol, reqBody) => {
                 snSpend,
                 sharesPurchased,
                 stats,
-                sharesStats
+                sharesStats,
+                startDate,
+                endDate,
+                dailyVariance,
+                annulazedVariance,
+                annulazedSD
             }
             resolve(resultObj)
 

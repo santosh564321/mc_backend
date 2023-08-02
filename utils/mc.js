@@ -155,7 +155,7 @@ const calculateSnSpend = (sma, mcTable, reqBody) => {
             result += (mcVal < limitPrice5 ? dailySpend5 - dailySpend4 : 0)
 
 
-            if (mcVal < 500) {
+            if (mcVal < 200) {
                 result += (mcVal < (smaVal * percentile1)) ? dailySpendSMA1 : 0
                 result += (mcVal < (smaVal * percentile2)) ? dailySpendSMA2 - dailySpendSMA1 : 0
                 result += (mcVal < (smaVal * percentile3)) ? dailySpendSMA3 - dailySpendSMA2 : 0
@@ -233,4 +233,4 @@ const roundOff2DArray = (arr) => {
 }
 
 
-module.exports = { calculateLRR, calculateVOR, calculateMC, calculateRollingAvgTable, calculateSnSpend, calculateSharesPurchased, calculate2QTotal, calculateStats, roundOff2DArray, roundOff1DArray }
+module.exports = { calculateLRR, calculateVOR, calculateMC, calculateRollingAvgTable, calculateSnSpend, calculateSharesPurchased, calculate2QTotal, calculateStats, roundOff2DArray, roundOff1DArray, calculateMean }
