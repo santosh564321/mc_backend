@@ -1,5 +1,6 @@
 const { calculateLRR, calculateVOR, calculateMC, calculateRollingAvgTable, calculateSnSpend, calculate2QTotal, calculateStats, roundOff2DArray, calculateSharesPurchased, calculateMean } = require("../utils/mc")
 const { getClosingPrices, getClosingPricesArr } = require("../utils/stocks")
+const moment = require('moment')
 
 const runCalculation = (symbol, reqBody) => {
     return new Promise(async (resolve, reject) => {
