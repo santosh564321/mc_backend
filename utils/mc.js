@@ -102,15 +102,15 @@ const calculateMC = (cpArr, lrr, vor, noOfDays) => {
     }
 }
 
-const calculateRollingAvgTable = (cpArr, mcTable) => {
+const calculateRollingAvgTable = (cpArr, mcTable, rows, cols) => {
     try {
         let sma = []
         cpArr.reverse()
         cpArr.splice(cpArr.length - 1, 1)
-        for (let i = 0; i < 199; i++) {
+        for (let i = 0; i < rows - 1; i++) {
             let sma_row = []
             let smaConcat = cpArr.concat(mcTable[i + 1])
-            for (let j = 0; j < 200; j++) {
+            for (let j = 0; j < cols; j++) {
 
                 let sum = 0
                 for (let k = j; k < 20 + j; k++) {
@@ -128,7 +128,7 @@ const calculateRollingAvgTable = (cpArr, mcTable) => {
 }
 
 // calculate scenario spend values
-const calculateSnSpend = (sma, mcTable, reqBody) => {
+const calculateSnSpend = (sma, mcTable, reqBody, rows, cols) => {
     const costAvgLimitPricePerShare = reqBody.costAvgLimitPricePerShare
     const dailyCostAvg = reqBody.dailyCostAvg
     const dailyMinSpend = reqBody.dailyMinSpend
@@ -138,9 +138,9 @@ const calculateSnSpend = (sma, mcTable, reqBody) => {
     const dailySpendSMA1 = reqBody.belowPrice ? reqBody.belowPrice : 0, dailySpendSMA2 = reqBody.percent2BelowPrice ? reqBody.percent2BelowPrice : 0, dailySpendSMA3 = reqBody.percent4BelowPrice ? reqBody.percent4BelowPrice : 0
 
     let scenarioSpend = []
-    for (let i = 0; i < 199; i++) {
+    for (let i = 0; i < rows - 1; i++) {
         let scenarioSpendRow = []
-        for (let j = 0; j < 199; j++) {
+        for (let j = 0; j < rows - 1; j++) {
             let result = 0
             let mcVal = mcTable[i + 1][j + 1]
             let smaVal = sma[i][j]
@@ -155,7 +155,7 @@ const calculateSnSpend = (sma, mcTable, reqBody) => {
             result += (mcVal < limitPrice5 ? dailySpend5 - dailySpend4 : 0)
 
 
-            if (mcVal < 200) {
+            if (mcVal < 500) {
                 result += (mcVal < (smaVal * percentile1)) ? dailySpendSMA1 : 0
                 result += (mcVal < (smaVal * percentile2)) ? dailySpendSMA2 - dailySpendSMA1 : 0
                 result += (mcVal < (smaVal * percentile3)) ? dailySpendSMA3 - dailySpendSMA2 : 0
@@ -168,9 +168,9 @@ const calculateSnSpend = (sma, mcTable, reqBody) => {
     return scenarioSpend
 }
 
-const calculate2QTotal = (snSpend) => {
+const calculate2QTotal = (snSpend, rows) => {
     let result = []
-    for (let i = 0; i < 199; i++) {
+    for (let i = 0; i < rows - 1; i++) {
         let sum = 0
         for (let j = 0; j < 7; j++) {
             sum += snSpend[i][j]

@@ -28,7 +28,7 @@ app.get("/path", (req, res) => {
 });
 
 app.get("/closingprices", async (req,res)=>{
-  resData = await getClosingPrices("IBM")
+  resData = await getClosingPrices("ADSK", "2023-01-01", "2023-08-05")
   res.status(200).json(resData)
 })
 

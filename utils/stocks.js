@@ -1,6 +1,7 @@
 const { default: axios } = require("axios")
 const ClosingPrice = require("../models/closingPrice")
 const moment = require("moment")
+const { Op } = require('sequelize');
 const syncClosingPricesHandler = require("../handlers/stocks")
 const db = require('../config/db')
 
@@ -65,7 +66,7 @@ const saveClosingPrices = (data) => {
     })
 }
 
-const getClosingPrices = (symbol) => {
+const getClosingPrices = (symbol, startDate, endDate) => {
     return new Promise(async (resolve, reject) => {
         try {
             let skipDBSync = false
@@ -79,7 +80,7 @@ const getClosingPrices = (symbol) => {
                 where: { symbol: symbol, date: today.format("YYYY-MM-DD") }
             }).catch(e => reject(e))
 
-            let data = await ClosingPrice.findAll({ where:{symbol: symbol}, limit: NO_OF_DAYS_TO_LOAD, order: [['date', 'DESC']] })
+            let data = await ClosingPrice.findAll({ where:{symbol: symbol, date:{[Op.between]:[startDate, endDate]}}, limit: NO_OF_DAYS_TO_LOAD, order: [['date', 'DESC']] })
             resolve(data)
 
         } catch (e) {
