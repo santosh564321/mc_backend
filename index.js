@@ -44,5 +44,9 @@ app.use((req, res, next) => {
   });
 });
 
-module.exports.apiHandler = serverless(app);
-module.exports.syncClosingPricesHandler = syncClosingPricesHandler
+app.listen(8080, ()=>{
+  console.log("server running on port 3000")
+})
+
+// module.exports.apiHandler = serverless(app);
+// module.exports.syncClosingPricesHandler = syncClosingPricesHandler

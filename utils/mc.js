@@ -129,11 +129,11 @@ const calculateRollingAvgTable = (cpArr, mcTable) => {
 
 // calculate scenario spend values
 const calculateSnSpend = (sma, mcTable, reqBody) => {
-    const costAvgLimitPricePerShare = 0
-    const dailyCostAvg = 0
-    const dailyMinSpend = 0
-    const limitPrice1 = 0, limitPrice2 = reqBody.limitPrice1 ? reqBody.limitPrice1 : 0, limitPrice3 = reqBody.limitPrice2 ? reqBody.limitPrice2 : 0, limitPrice4 = 0, limitPrice5 = 0
-    const dailySpend1 = 0, dailySpend2 = reqBody.dailySpend1 ? reqBody.dailySpend1 : 0, dailySpend3 = reqBody.dailySpend2 ? reqBody.dailySpend2 : 0, dailySpend4 = 0, dailySpend5 = 0
+    const costAvgLimitPricePerShare = reqBody.costAvgLimitPricePerShare
+    const dailyCostAvg = reqBody.dailyCostAvg
+    const dailyMinSpend = reqBody.dailyMinSpend
+    const limitPrice1 = reqBody.limitPrice1 ? reqBody.limitPrice1 : 0, limitPrice2 = reqBody.limitPrice2 ? reqBody.limitPrice2 : 0, limitPrice3 = reqBody.limitPrice3 ? reqBody.limitPrice3 : 0, limitPrice4 = reqBody.limitPrice4 ? reqBody.limitPrice4 : 0, limitPrice5 = reqBody.limitPrice5 ? reqBody.limitPrice5 : 0
+    const dailySpend1 = reqBody.dailySpend1 ? reqBody.dailySpend1 : 0, dailySpend2 = reqBody.dailySpend2 ? reqBody.dailySpend2 : 0, dailySpend3 = reqBody.dailySpend3 ? reqBody.dailySpend3 : 0, dailySpend4 = reqBody.dailySpend4 ? reqBody.dailySpend4 : 0, dailySpend5 = reqBody.dailySpend5 ? reqBody.dailySpend5 : 0
     const percentile1 = 1, percentile2 = 0.98, percentile3 = 0.96
     const dailySpendSMA1 = reqBody.belowPrice ? reqBody.belowPrice : 0, dailySpendSMA2 = reqBody.percent2BelowPrice ? reqBody.percent2BelowPrice : 0, dailySpendSMA3 = reqBody.percent4BelowPrice ? reqBody.percent4BelowPrice : 0
 

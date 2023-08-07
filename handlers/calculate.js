@@ -15,7 +15,7 @@ const runCalculation = (symbol, reqBody) => {
             console.log("==========LRR========\n", lrr)
             let vor = calculateVOR(lrr)
             console.log("==========VOR========\n", vor)
-            let dailyVariance = calculateMean(lrr)
+            let dailyVariance = calculateMean(vor)
             let annulazedVariance = dailyVariance * 252
             let annulazedSD = Math.sqrt(annulazedVariance)
             let startDate = closingPrices[closingPrices.length - 1].date
