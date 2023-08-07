@@ -5,7 +5,7 @@ const syncClosingPricesHandler = require("../handlers/stocks")
 const db = require('../config/db')
 
 const API_KEY = "SHAV1DSZQFP9MPAG"
-const API_URL = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY"
+const API_URL = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&outputsize=full"
 
 const NO_OF_DAYS_TO_LOAD = 20
 
@@ -35,7 +35,8 @@ const parseClosingPrices = (data) => {
                     return 1
                 }
             })
-            obj = obj.splice(obj.length - NO_OF_DAYS_TO_LOAD, NO_OF_DAYS_TO_LOAD)
+            // obj = obj.splice(obj.length - NO_OF_DAYS_TO_LOAD, NO_OF_DAYS_TO_LOAD)
+            obj = [obj[0]] // save today's data
             resolve(obj)
         } catch (e) {
             console.error("Failed to parse the stocks data")

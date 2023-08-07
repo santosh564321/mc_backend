@@ -7,6 +7,8 @@ const { getClosingPrices } = require("./utils/stocks");
 const runCalculation = require("./handlers/calculate");
 const app = express();
 
+var CronJob = require('cron').CronJob;
+
 const db = require('./config/db')
 const ClosingPrice = require("./models/closingPrice")
 
@@ -54,7 +56,19 @@ app.listen(3030, async ()=>{
   ClosingPrice.sync({
       alter: true
   })
+  
+  let job =  new CronJob(
+    '30 5 * * ? *',
+    ()=>{
+      syncClosingPricesHandler(null,null, ()=>{console.info("synced today's closing price")})
+    },
+    null,
+    true,
+    'America/New_York'
+  )
+  job.start()
 })
+
 
 // module.exports.apiHandler = serverless(app);
 // module.exports.syncClosingPricesHandler = syncClosingPricesHandler
