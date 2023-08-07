@@ -8,7 +8,6 @@ const db = require('../config/db')
 const API_KEY = "SHAV1DSZQFP9MPAG"
 const API_URL = "https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&outputsize=full"
 
-const NO_OF_DAYS_TO_LOAD = 20
 
 const fetchClosingPrices = (symbol) => {
     return new Promise(async (resolve, reject) => {
@@ -80,7 +79,7 @@ const getClosingPrices = (symbol, startDate, endDate) => {
                 where: { symbol: symbol, date: today.format("YYYY-MM-DD") }
             }).catch(e => reject(e))
 
-            let data = await ClosingPrice.findAll({ where:{symbol: symbol, date:{[Op.between]:[startDate, endDate]}}, limit: NO_OF_DAYS_TO_LOAD, order: [['date', 'DESC']] })
+            let data = await ClosingPrice.findAll({ where:{symbol: symbol, date:{[Op.between]:[startDate, endDate]}}, order: [['date', 'DESC']] })
             resolve(data)
 
         } catch (e) {
