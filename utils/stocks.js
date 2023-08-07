@@ -78,9 +78,6 @@ const getClosingPrices = (symbol) => {
                 where: { symbol: symbol, date: today.format("YYYY-MM-DD") }
             }).catch(e => reject(e))
 
-
-            await db.authenticate().catch(e => console.error(e))
-
             let data = await ClosingPrice.findAll({ where:{symbol: symbol}, limit: NO_OF_DAYS_TO_LOAD, order: [['date', 'DESC']] })
             resolve(data)
 

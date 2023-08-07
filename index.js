@@ -7,6 +7,9 @@ const { getClosingPrices } = require("./utils/stocks");
 const runCalculation = require("./handlers/calculate");
 const app = express();
 
+const db = require('./config/db')
+const ClosingPrice = require("./models/closingPrice")
+
 app.use(cors())
 app.use(bodyParser.json())
 
@@ -44,8 +47,13 @@ app.use((req, res, next) => {
   });
 });
 
-app.listen(3030, ()=>{
+app.listen(3030, async ()=>{
   console.log("server running on port 3030")
+  await db.authenticate().catch(e => console.error(e))
+  console.info("connected to DB")
+  ClosingPrice.sync({
+      alter: true
+  })
 })
 
 // module.exports.apiHandler = serverless(app);
