@@ -5,7 +5,7 @@ const moment = require('moment')
 const runCalculation = (symbol, reqBody) => {
     return new Promise(async (resolve, reject) => {
         try {
-            let startDate = reqBody.startDate != '' ? moment(reqBody.startDate).format('YYYY-MM-DD') : moment().subtract(10, 'days').format('YYYY-MM-DD')
+            let startDate = reqBody.startDate != '' ? moment(reqBody.startDate).format('YYYY-MM-DD') : moment().subtract(40, 'days').format('YYYY-MM-DD')
             let endDate = reqBody.endDate != '' ? moment(reqBody.endDate).format('YYYY-MM-DD') : moment().format('YYYY-MM-DD') 
             let MC_ROWS = reqBody.noOfIterations ? reqBody.noOfIterations : 200
             let NO_DAYS = reqBody.noOfDaysInAnalysis ? reqBody.noOfDaysInAnalysis : 200
