@@ -48,7 +48,7 @@ const runCalculation = (symbol, reqBody) => {
             let sharesPurchased = calculateSharesPurchased(mcTable, snSpend)
             console.log(sharesPurchased.length, sharesPurchased[0].length)
 
-            let q2TotalShares = calculate2QTotal(sharesPurchased)
+            let q2TotalShares = calculate2QTotal(sharesPurchased, MC_ROWS)
 
             let sharesStats = calculateStats(q2TotalShares)
 
