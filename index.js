@@ -16,18 +16,14 @@ const ClosingPrice = require("./models/closingPrice")
 app.use(cors())
 app.use(bodyParser.json())
 
+// exposed for testing
 app.get("/", (req, res) => {
   res.status(200).json({
     message: "Hello from root!",
   });
 });
 
-app.get("/path", (req, res) => {
-  res.status(200).json({
-    message: "Hello from path!",
-  });
-});
-
+// /closingprices is used to fetch the closing prices of a specific stock, startDate, endDate, and symbol are the supported query params
 app.get("/closingprices", async (req, res) => {
   let startDate = req.query.startDate ? moment(req.query.startDate).format('YYYY-MM-DD') : '2023-01-01'
   let endDate = req.query.endDate ? moment(req.query.endDate).format('YYYY-MM-DD') : '2024-01-01'
@@ -36,6 +32,7 @@ app.get("/closingprices", async (req, res) => {
   res.status(200).json(resData)
 })
 
+// /calculate is used to do the MC calculation.
 app.post("/calculate", (req, res) => {
   console.log("request data", req.body)
   runCalculation("ADSK", req.body).then((resp) => {
@@ -53,6 +50,7 @@ app.use((req, res, next) => {
   });
 });
 
+// starting the http server
 app.listen(3030, async () => {
   console.log("server running on port 3030")
   await db.authenticate().catch(e => console.error(e))
@@ -61,6 +59,7 @@ app.listen(3030, async () => {
     alter: true
   })
 
+  // uncomment the below block to enable cron job that syncs stock data everyday
   // let job = new CronJob(
   //   '30 5 * * ? *',
   //   () => {
